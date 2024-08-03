@@ -1,25 +1,31 @@
 <html>
     <head>
         <title>
-            <%= locals.title%> 
+            <%= locals.title%>
         </title>
-     </head>
-     <body>
-        <h1>Contact List</h1>
+        <link rel="stylesheet" href="/css/home.css">
+    </head>
+    <body>
+
         <div>
             <ul>
-                <% for (let i of contact_list) { %>
-                <li>
-                    <p><%= i.name %></p>
-                    <p><%= i.phone %></p>
-                </li>
-            <% } %>
+                   
+                <% for (let i of contact_list) { %> 
+                    
+                    <li>
+                        <p><%= i.name %></p>
+                        <p><%= i.phone %></p>
+                    </li>
+                    
+                <% } %>
             </ul>
         </div>
-        <form action="/create-contact" method="post">
-            <input type="text" name="name" placeholder="Enter Name" required>
-            <input type="number" name="phone" placeholder="Enter Phone" required>
-            <button type="submit">Add Contact</button>
+
+        <form action="/create-contact" method="POST">
+            <input type="text" name="name" placeholder="Enter name" required>
+            <input type="number" name="phone" placeholder="Enter phone" required>
+            <button type="submit">Add contact</button>
         </form>
-     </body>
+        <script type="text/javascript" src="/js/home.js"></script>
+    </body>
 </html>
