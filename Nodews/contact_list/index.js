@@ -4,6 +4,9 @@ const path = require('path');
 const { title } = require('process');
 const port = 8000;
 
+const db = require('./config/mongoose');
+const Contact = require('./models/contact')
+
 const app = express();
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -53,7 +56,7 @@ app.get('/practice', function(req, res){
     });
 }); 
 app.post('/create-contact', function(req, res){
-    contactlist.push(req.body);
+    // contactlist.push(req.body);
     // contactlist.push({
     //     name: req.body.name,
     //     phone: req.body.phone
@@ -61,7 +64,18 @@ app.post('/create-contact', function(req, res){
     //  console.log(req.body);
     //  console.log(req.body.name);
     //  console.log(req.body.phone);
-    return res.redirect('back');
+    Contact.create({
+        name: req.body.name,
+        phone: req.body.phone
+    })
+    .then(newContact => {
+        console.log('********', newContact);
+        return res.redirect('back');
+    })
+    .catch(err => {
+        console.log('error in creating a contact!', err);
+        return res.status(500).send("Error creating contact");
+    });
 });
 
 app.listen(port, function(err){
