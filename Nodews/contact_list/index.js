@@ -45,8 +45,16 @@ app.get('/', function(req, res){
     // console.log('from the get route controller', req.myName);  
     // console.log(__dirname);
     // res.send('<h1>Cool, it is running! or is it?</h1>');
-    return res.render('home', {title: "Contact List",
-        contact_list: contactlist
+    Contact.find({})
+    .then(contacts => {
+        return res.render('home', {
+            title: "Contact List",
+            contact_list: contacts
+        });
+    })
+    .catch(err => {
+        console.log('Error in fetching contacts from db', err);
+        return res.status(500).send("Error fetching contacts");
     });
 });
 
