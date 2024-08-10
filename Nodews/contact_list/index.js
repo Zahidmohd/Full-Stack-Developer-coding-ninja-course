@@ -94,15 +94,28 @@ console.log('Yup! My Express Server is running on Port:', port);
 
 
 app.get('/delete-contact/', function(req, res){
-    console.log(req.query);
-    let phone = req.query.phone
+    // get the id from query in the ul
+    let id = req.query.id;
+    // delete the contact from the contact list
+    Contact.findByIdAndDelete(id)
+        .then(() => {
+            return res.redirect('back');
+        })
+        .catch(err => {
+            console.log('Error in deleting contact', err);
+            return res.status(500).send("Error deleting contact");
+    
 
-    let contactindex = contactList.findIndex(contact => contact.phone == phone);
+    // console.log(req.query);
+    // let phone = req.query.phone
 
-    if(contactindex != -1){
-        contactList.splice(contactindex, 1);
-    }
+    // let contactindex = contactList.findIndex(contact => contact.phone == phone);
 
-    return res.redirect('back');
+    // if(contactindex != -1){
+    //     contactList.splice(contactindex, 1);
+    // }
+     return res.redirect('back');
+    });
 });
+
    
